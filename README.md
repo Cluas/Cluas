@@ -6,4 +6,5 @@
 🌱 I’m currently learning algorithm.
 
 - 个人网站: https://cluas.me
-- 开源项目: [支付宝小程序go sdk](https://github.com/Cluas/go-alipay)
+- Gopher
+- Vimer
