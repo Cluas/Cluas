@@ -3,7 +3,7 @@
 
 ### Hello, I'm Cluas 👋
 
-🌱 I’m currently learning algorithm.
+🌱 I’m currently learning Rust.
 
 - 个人网站: https://cluas.me
 - Gopher
