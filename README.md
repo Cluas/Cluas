@@ -5,6 +5,6 @@
 
 🌱 I’m currently learning Rust.
 
-- 个人网站: https://cluas.me
 - Gopher
 - Vimer
+- ..
