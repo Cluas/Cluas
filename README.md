@@ -1,10 +1,103 @@
+<div align="center">
 
-<img align="right" src="https://github-readme-stats.vercel.app/api?username=Cluas&show_icons=true&icon_color=805AD5&text_color=718096&bg_color=ffffff&hide_title=true" />
+# 👨‍💻 Cluas
 
-### Hello, I'm Cluas 👋
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=2E9FFF&center=true&vCenter=true&width=600&lines=Hey+there!+I'm+Cluas+%F0%9F%91%8B;Gopher+%7C+Rustacean+%7C+Vimer;Building+awesome+things+with+code+%F0%9F%9A%80;Always+learning%2C+always+coding+%F0%9F%92%BB)](https://git.io/typing-svg)
 
-🌱 I’m currently learning Rust.
+</div>
 
-- Gopher
-- Vimer
-- ..
+---
+
+<img align="right" width="400" src="https://github-readme-stats.vercel.app/api?username=Cluas&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=1F6FEB&text_color=C9D1D9&border_radius=10" alt="GitHub Stats" />
+
+### 🚀 About Me
+
+```go
+package main
+
+type Developer struct {
+    Name      string
+    Role      string
+    Languages []string
+    Learning  string
+    Interests []string
+}
+
+func main() {
+    me := Developer{
+        Name:      "Cluas",
+        Role:      "Backend Developer",
+        Languages: []string{"Go", "Rust", "Python"},
+        Learning:  "Rust 🦀",
+        Interests: []string{"DevOps", "Cloud Native", "Open Source"},
+    }
+}
+```
+
+<br clear="right"/>
+
+---
+
+### 🛠️ Tech Stack
+
+<div align="center">
+
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Vim](https://img.shields.io/badge/Vim-019733?style=for-the-badge&logo=vim&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+
+</div>
+
+---
+
+### 📊 GitHub Activity
+
+<div align="center">
+  <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=Cluas&theme=tokyonight&hide_border=true&background=0D1117&stroke=58A6FF&ring=1F6FEB&fire=F85149&currStreakLabel=C9D1D9&border_radius=10" alt="GitHub Streak" />
+  <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Cluas&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9&border_radius=10" alt="Top Languages" />
+</div>
+
+<div align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Cluas&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=1F6FEB&point=F85149&area=true&radius=10" alt="Contribution Graph" />
+</div>
+
+---
+
+### 🏆 GitHub Trophies
+
+<div align="center">
+  <img src="https://github-profile-trophy.vercel.app/?username=Cluas&theme=tokyonight&no-frame=true&no-bg=true&column=7&margin-w=15&margin-h=15" alt="GitHub Trophies" />
+</div>
+
+---
+
+### 💡 Random Dev Quote
+
+<div align="center">
+
+![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight)
+
+</div>
+
+---
+
+<div align="center">
+
+### 🤝 Let's Connect
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Cluas)
+
+**💬 Feel free to reach out for collaborations or just a friendly chat!**
+
+---
+
+![Profile Views](https://komarev.com/ghpvc/?username=Cluas&color=58A6FF&style=for-the-badge&label=Profile+Views)
+
+*✨ "Code is like humor. When you have to explain it, it's bad." - Cory House*
+
+</div>
