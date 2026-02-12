@@ -57,6 +57,12 @@ func main() {
 
 ### 📊 GitHub Activity
 
+<!-- 
+  Note: The stats below use the public github-readme-stats API which may experience rate limits.
+  For a more reliable alternative, consider using GitHub Actions to generate static cards:
+  https://github.com/anuraghazra/github-readme-stats#github-actions
+-->
+
 <div align="center">
   <img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=Cluas&theme=tokyonight&hide_border=true&background=0D1117&stroke=58A6FF&ring=1F6FEB&fire=F85149&currStreakLabel=C9D1D9&border_radius=10" alt="GitHub Streak" />
   <img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Cluas&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9&border_radius=10" alt="Top Languages" />
