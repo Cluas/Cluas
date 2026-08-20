@@ -34,7 +34,7 @@ me := Developer{
 
 <div align="center">
 
-<img width="49%" src="https://github-readme-streak-stats.herokuapp.com/?user=Cluas&theme=tokyonight&hide_border=true&background=0D1117&stroke=58A6FF&ring=1F6FEB&fire=F85149&currStreakLabel=C9D1D9&border_radius=10" alt="GitHub Streak" />
+<img width="49%" src="./profile/streak.svg" alt="GitHub Streak" />
 <img width="49%" src="./profile/top-langs.svg" alt="Top Languages" />
 
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=Cluas&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=1F6FEB&point=F85149&area=true&radius=10" alt="Contribution Graph" />
