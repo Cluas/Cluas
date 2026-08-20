@@ -1,0 +1,87 @@
+name: Squash history
+
+# 每日卡片提交会让历史无限增长，这里定期把整个历史压成单个提交后 force-push。
+#
+# 注意：重写历史会让旧 commit 变成不可达对象，GitHub 会把它们从贡献图里移除。
+# 本仓库的卡片提交 author 是 Cluas 本人，所以压缩后这部分贡献和 streak 会归零。
+# backup 分支保留一份旧历史作为回滚点（也让旧 commit 保持可达）。
+
+on:
+  schedule:
+    - cron: "0 4 1 * *"     # 每月 1 号 04:00 UTC，避开 03:00 的卡片任务
+  workflow_dispatch:
+    inputs:
+      backup:
+        description: "压缩前把旧历史备份到 pre-squash-backup 分支"
+        type: boolean
+        default: true
+      min_commits:
+        description: "少于该提交数则跳过，不做无意义的重写"
+        type: string
+        default: "50"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: squash-history
+  cancel-in-progress: false
+
+jobs:
+  squash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Decide whether to squash
+        id: check
+        env:
+          MIN_COMMITS: ${{ inputs.min_commits || '50' }}
+        run: |
+          count=$(git rev-list --count HEAD)
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          if [ "$count" -lt "$MIN_COMMITS" ]; then
+            echo "当前 $count 个提交，未达阈值 $MIN_COMMITS，跳过"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "当前 $count 个提交，达到阈值 $MIN_COMMITS，执行压缩"
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Back up current history
+        if: steps.check.outputs.proceed == 'true' && (github.event_name != 'workflow_dispatch' || inputs.backup)
+        run: |
+          git push --force origin HEAD:refs/heads/pre-squash-backup
+          echo "旧历史已备份到 pre-squash-backup 分支"
+
+      - name: Squash into a single commit
+        if: steps.check.outputs.proceed == 'true'
+        env:
+          BRANCH: ${{ github.event.repository.default_branch }}
+          COUNT: ${{ steps.check.outputs.count }}
+        run: |
+          set -euo pipefail
+          # author 保持 Cluas 本人，让压缩后的这一个提交仍计入贡献
+          git config user.name  "Cluas"
+          git config user.email "10056928+Cluas@users.noreply.github.com"
+
+          first_date=$(git log --reverse --format=%as | head -1)
+          git checkout --orphan squashed
+          git add -A
+          git commit -m "chore: squash history" \
+                     -m "Squashed ${COUNT} commits (${first_date} .. $(date -u +%F)) into a single commit."
+          git push --force origin "squashed:${BRANCH}"
+          echo "已将 ${COUNT} 个提交压缩为 1 个并推送到 ${BRANCH}"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Squash history"
+            echo ""
+            echo "- 压缩前提交数: ${{ steps.check.outputs.count }}"
+            echo "- 是否执行: ${{ steps.check.outputs.proceed }}"
+          } >> "$GITHUB_STEP_SUMMARY"

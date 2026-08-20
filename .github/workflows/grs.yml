@@ -13,13 +13,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # stats 卡需要跨仓库/用户级的聚合数据（总 commit、PR、issue、star），
+      # GITHUB_TOKEN 只作用于本仓库，会返回 "Resource not accessible by integration"。
+      # 需在仓库 Secrets 里配置 GH_PAT（classic PAT，勾选 read:user + repo）。
       - name: Generate stats card
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
           options: username=${{ github.repository_owner }}&show_icons=true
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Generate top languages card
         uses: readme-tools/github-readme-stats-action@v1
@@ -27,7 +30,7 @@ jobs:
           card: top-langs
           options: username=${{ github.repository_owner }}&layout=compact
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Generate trophy card
         uses: soulteary/github-profile-trophy-action@v1.0.0
@@ -36,8 +39,25 @@ jobs:
           path: profile/trophy.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # 生成器出错时会把一张「Something went wrong」的 SVG 写到磁盘并正常退出，
+      # 导致 workflow 显示 success 但卡片是坏的。这里显式拦一道。
+      - name: Verify cards
+        run: |
+          fail=0
+          for f in profile/stats.svg profile/top-langs.svg profile/trophy.svg; do
+            if [ ! -s "$f" ]; then
+              echo "::error file=$f::卡片缺失或为空"; fail=1; continue
+            fi
+            if grep -qi "Something went wrong\|Resource not accessible\|Bad credentials" "$f"; then
+              echo "::error file=$f::生成失败 — $(grep -oiE 'Resource not accessible[^<]*|Bad credentials[^<]*|Something went wrong[^<]*' "$f" | head -1)"
+              fail=1
+            fi
+          done
+          [ "$fail" -eq 0 ] || { echo "提示：stats 卡失败通常是缺少 GH_PAT secret（需 read:user + repo）"; exit 1; }
+          echo "三张卡片均校验通过"
+
       - name: Commit cards
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update README cards"
+          commit_message: "chore: update README cards"
           file_pattern: "profile/*.svg"
