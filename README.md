@@ -1,51 +1,12 @@
-<div align="center">
+## Cluas
 
-# 👨‍💻 Cluas
+Backend developer in Wenzhou, China. Go and Rust, mostly the infrastructure
+underneath — observability pipelines, collectors, cloud-native plumbing.
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=2E9FFF&center=true&vCenter=true&width=600&lines=Hey+there!+I'm+Cluas+%F0%9F%91%8B;Gopher+%7C+Rustacean+%7C+Vimer;Building+awesome+things+with+code+%F0%9F%9A%80;Always+learning%2C+always+coding+%F0%9F%92%BB)](https://git.io/typing-svg)
+Currently writing more Rust than Go.
 
-![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Vim](https://img.shields.io/badge/Vim-019733?style=for-the-badge&logo=vim&logoColor=white)
+**Go** · **Rust** · **Python** · **Kubernetes** · **OpenTelemetry** · **Vim**
 
-</div>
+[cluas.me](https://cluas.me) · [Cluas@live.cn](mailto:Cluas@live.cn)
 
----
-
-<img align="right" width="400" src="./profile/stats.svg" alt="GitHub Stats" />
-
-```go
-me := Developer{
-    Name:      "Cluas",
-    Role:      "Backend Developer",
-    Languages: []string{"Go", "Rust", "Python"},
-    Learning:  "Rust 🦀",
-    Interests: []string{"DevOps", "Cloud Native", "Open Source"},
-}
-```
-
-<br clear="right"/>
-
----
-
-<div align="center">
-
-<img width="49%" src="./profile/streak.svg" alt="GitHub Streak" />
-<img width="49%" src="./profile/top-langs.svg" alt="Top Languages" />
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Cluas&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=1F6FEB&point=F85149&area=true&radius=10" alt="Contribution Graph" />
-
-<img src="./profile/trophy.svg" alt="GitHub Trophies" />
-
----
-
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Cluas)
-![Profile Views](https://komarev.com/ghpvc/?username=Cluas&color=58A6FF&style=for-the-badge&label=Profile+Views)
-
-*✨ "Code is like humor. When you have to explain it, it's bad." — Cory House*
-
-</div>
+<img width="440" src="./profile/stats.svg" alt="GitHub stats" />

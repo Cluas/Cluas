@@ -1,4 +1,4 @@
-name: Update README cards
+name: Update README card
 
 on:
   schedule:
@@ -13,92 +13,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 卡片先生成到 .cards-tmp/，校验通过才覆盖 profile/ 下的正式文件。
-      # 这样单张卡片失败既不会污染已有的好文件，也不会连累其它卡片提交。
       - name: Prepare
         run: mkdir -p .cards-tmp profile
 
+      # 卡片先生成到 .cards-tmp/，校验通过才覆盖 profile/ 下的正式文件，
+      # 生成失败时保留上一次的好文件，不会把报错图提交进仓库。
+      #
       # stats 卡需要跨仓库/用户级聚合数据（总 commit、PR、issue、star），
-      # GITHUB_TOKEN 只作用于本仓库，会返回 "Resource not accessible by integration"。
-      # 需在仓库 Secrets 配置 GH_PAT（classic PAT，勾 read:user + repo）。
+      # GITHUB_TOKEN 只作用于本仓库，会返回 "Resource not accessible by integration"，
+      # 因此走仓库 Secret GH_PAT（classic PAT，勾 read:user）。
       - name: Generate stats card
         continue-on-error: true
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          options: username=${{ github.repository_owner }}&show_icons=true&hide_border=true&theme=transparent&hide_title=true&hide_rank=false
+          options: username=${{ github.repository_owner }}&show_icons=true&hide_border=true&theme=transparent&hide_title=true
           path: .cards-tmp/stats.svg
           token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
-      - name: Generate top languages card
-        continue-on-error: true
-        uses: readme-tools/github-readme-stats-action@v1
-        with:
-          card: top-langs
-          options: username=${{ github.repository_owner }}&layout=compact&hide_border=true&theme=transparent&hide_title=true
-          path: .cards-tmp/top-langs.svg
-          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-
-      - name: Generate trophy card
-        continue-on-error: true
-        uses: soulteary/github-profile-trophy-action@v1.0.0
-        with:
-          options: 'username=${{ github.repository_owner }}&theme=gruvbox&column=7&margin-w=15&margin-h=15'
-          path: .cards-tmp/trophy.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      # streak 卡没有官方 action，直接抓公共实例。该实例会间歇性限流，
-      # 之前直接把它当外链写在 README 里，GitHub 的 camo 代理会把失败结果缓存住，
-      # 于是页面上长期挂着一张「Failed to retrieve contributions」。
-      # 改成 CI 抓取 + 落盘，失败就保留上一次的好文件。
-      - name: Generate streak card
-        continue-on-error: true
-        run: |
-          curl -fsS --retry 5 --retry-delay 5 --retry-all-errors --max-time 30 \
-            -o .cards-tmp/streak.svg \
-            "https://github-readme-streak-stats.herokuapp.com/?user=${{ github.repository_owner }}&theme=tokyonight&hide_border=true&background=0D1117&stroke=58A6FF&ring=1F6FEB&fire=F85149&currStreakLabel=C9D1D9&border_radius=10"
-
-      - name: Validate and publish cards
+      - name: Validate and publish
         id: validate
         run: |
-          failed=""
-          for name in stats top-langs trophy streak; do
-            src=".cards-tmp/$name.svg"
-            dst="profile/$name.svg"
-
-            if [ ! -s "$src" ]; then
-              echo "::warning::$name 生成失败（文件缺失或为空），保留原有文件"
-              failed="$failed $name"; continue
-            fi
-            if grep -qi "Something went wrong\|Resource not accessible\|Bad credentials\|Failed to retrieve\|rate limit" "$src"; then
-              reason=$(grep -oiE "Resource not accessible[^<]*|Bad credentials[^<]*|Failed to retrieve[^<]*|rate limit[^<]*|Something went wrong[^<]*" "$src" | head -1)
-              echo "::warning::$name 生成失败（$reason），保留原有文件"
-              failed="$failed $name"; continue
-            fi
-
-            cp "$src" "$dst"
-            echo "$name 校验通过"
-          done
-
+          src=.cards-tmp/stats.svg
+          if [ ! -s "$src" ]; then
+            echo "::warning::stats 生成失败（文件缺失或为空），保留原有文件"
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+          elif grep -qi "Something went wrong\|Resource not accessible\|Bad credentials\|rate limit" "$src"; then
+            reason=$(grep -oiE "Resource not accessible[^<]*|Bad credentials[^<]*|rate limit[^<]*|Something went wrong[^<]*" "$src" | head -1)
+            echo "::warning::stats 生成失败（$reason），保留原有文件"
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+          else
+            cp "$src" profile/stats.svg
+            echo "stats 校验通过"
+          fi
           rm -rf .cards-tmp
-          echo "failed=${failed# }" >> "$GITHUB_OUTPUT"
 
-      # 好的卡片照常提交，不受坏卡片连累
-      - name: Commit cards
+      - name: Commit card
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update README cards"
+          commit_message: "chore: update README card"
           file_pattern: "profile/*.svg"
 
-      # 提交完再报错，让失败在 Actions 里可见，不至于像之前那样天天假装成功
-      - name: Report failures
-        if: steps.validate.outputs.failed != ''
+      - name: Report failure
+        if: steps.validate.outputs.failed == 'true'
         run: |
-          echo "以下卡片本次未能更新：${{ steps.validate.outputs.failed }}"
-          case "${{ steps.validate.outputs.failed }}" in
-            *stats*) echo "提示：stats/top-langs 失败通常是缺少 GH_PAT secret（需 read:user + repo）";;
-          esac
-          case "${{ steps.validate.outputs.failed }}" in
-            *streak*) echo "提示：streak 公共实例限流属常态，下次定时任务会自动重试";;
-          esac
+          echo "stats 卡本次未能更新，通常是 GH_PAT 缺失或过期（需 read:user）"
           exit 1
