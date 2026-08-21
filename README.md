@@ -1,11 +1,9 @@
 ## Cluas
 
-Backend developer in Wenzhou, China. Go and Rust, mostly the infrastructure
-underneath — observability pipelines, collectors, cloud-native plumbing.
+Backend developer in Wenzhou, China. Mostly Go — observability pipelines,
+collectors, cloud-native plumbing. Python for tooling, and lately some Rust.
 
-Currently writing more Rust than Go.
-
-**Go** · **Rust** · **Python** · **Kubernetes** · **OpenTelemetry** · **Vim**
+**Go** · **Python** · **Rust** · **Kubernetes** · **OpenTelemetry** · **Vim**
 
 [Cluas@live.cn](mailto:Cluas@live.cn)
 
